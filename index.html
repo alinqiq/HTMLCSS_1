@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>День рождения - Поздравления для тебя!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        .birthday-title {
+            font-family: 'Pacifico', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .message-card {
+            font-family: 'Marck Script', cursive;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        .message-card:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+        }
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #f00;
+            border-radius: 50%;
+            animation: fall linear forwards;
+            z-index: 1000;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .heart {
+            animation: beat 1s infinite alternate;
+        }
+        @keyframes beat {
+            to {
+                transform: scale(1.1);
+            }
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen pb-20">
+    <!-- Confetti container -->
+    <div id="confetti-container"></div>
+
+    <!-- Header -->
+    <header class="text-center py-12 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600 opacity-10 rounded-full transform rotate-45"></div>
+        <h1 class="birthday-title text-5xl md:text-7xl text-purple-600 mb-4 animate__animated animate__bounceIn">С Днём Рождения!</h1>
+        <div class="flex justify-center mb-6">
+            <svg class="w-16 h-16 text-pink-500 heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+            <svg class="w-16 h-16 text-pink-500 heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+            <svg class="w-16 h-16 text-pink-500 heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+        </div>
+        <p class="text-xl md:text-2xl text-gray-700 animate__animated animate__fadeIn">23 июля - особенный день!</p>
+        
+        <!-- Countdown timer -->
+        <div id="countdown" class="mt-8 bg-white bg-opacity-80 rounded-xl shadow-lg inline-block p-4 animate__animated animate__fadeInUp">
+            <div class="flex space-x-4 md:space-x-8">
+                <div class="text-center">
+                    <div id="days" class="text-3xl md:text-5xl font-bold text-purple-600">00</div>
+                    <div class="text-gray-600">дней</div>
+                </div>
+                <div class="text-center">
+                    <div id="hours" class="text-3xl md:text-5xl font-bold text-pink-500">00</div>
+                    <div class="text-gray-600">часов</div>
+                </div>
+                <div class="text-center">
+                    <div id="minutes" class="text-3xl md:text-5xl font-bold text-purple-600">00</div>
+                    <div class="text-gray-600">минут</div>
+                </div>
+                <div class="text-center">
+                    <div id="seconds" class="text-3xl md:text-5xl font-bold text-pink-500">00</div>
+                    <div class="text-gray-600">секунд</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4">
+        <!-- Message form -->
+        <section class="mb-16 animate__animated animate__fadeIn">
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+                <h2 class="text-2xl font-bold text-center text-purple-700 mb-6">Оставь своё пожелание!</h2>
+                <form id="greeting-form" class="space-y-4">
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Твоё пожелание*</label>
+                        <textarea id="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Напиши что-нибудь хорошее..." required></textarea>
+                    </div>
+                    <div>
+                        <label for="sender" class="block text-sm font-medium text-gray-700 mb-1">Твоё имя (необязательно)</label>
+                        <input type="text" id="sender" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Любимый друг">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="anonymous" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                        <label for="anonymous" class="ml-2 block text-sm text-gray-700">Отправить анонимно</label>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-4 rounded-md hover:from-purple-600 hover:to-pink-600 transition duration-300 font-medium">Отправить пожелание</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Messages display -->
+        <section>
+            <h2 class="text-3xl text-center font-bold text-gray-800 mb-10 pt-6 animate__animated animate__fadeIn">Пожелания от друзей</h2>
+            
+            <div id="messages-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Messages will be added here dynamically -->
+                
+                <!-- Example message (will be removed when real messages appear) -->
+                <div class="message-card bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-6 shadow-lg border border-purple-100">
+                    <div class="text-lg md:text-xl text-gray-800 mb-4">Пусть этот день рождения будет наполнен радостью, смехом и всем тем, что делает тебя счастливым! Поздравляю!</div>
+                    <div class="text-right text-sm text-purple-700 italic">— Аноним</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-8 text-center text-gray-600">
+        <p>С любовью для тебя ❤️</p>
+        <p class="mt-2 text-sm">23 июля - самый лучший день!</p>
+    </footer>
+
+    <!-- Popup notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 ease-in-out">
+        Пожелание успешно отправлено!
+    </div>
+
+    <script>
+        // Countdown timer
+        function updateCountdown() {
+            const birthday = new Date('July 23, 2025 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = birthday - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerHTML = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Form submission
+        document.getElementById('greeting-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const message = document.getElementById('message').value.trim();
+            let sender = document.getElementById('sender').value.trim();
+            const isAnonymous = document.getElementById('anonymous').checked;
+            
+            if (isAnonymous || sender === '') {
+                sender = 'Аноним';
+            }
+            
+            if (message !== '') {
+                // Create new message card
+                const messagesContainer = document.getElementById('messages-container');
+                const messageCard = document.createElement('div');
+                messageCard.className = 'message-card bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-6 shadow-lg border border-purple-100 animate__animated animate__zoomIn';
+                messageCard.innerHTML = `
+                    <div class="text-lg md:text-xl text-gray-800 mb-4">${message}</div>
+                    <div class="text-right text-sm text-purple-700 italic">— ${sender}</div>
+                `;
+                
+                // Prepend new message
+                messagesContainer.insertBefore(messageCard, messagesContainer.firstChild);
+                
+                // Clear form
+                document.getElementById('message').value = '';
+                document.getElementById('sender').value = '';
+                document.getElementById('anonymous').checked = false;
+                
+                // Show notification
+                showToast();
+                
+                // Create confetti
+                createConfetti();
+            }
+        });
+
+        // Show toast notification
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateY(20px)';
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#f87171', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa', '#f472b6'];
+            const container = document.getElementById('confetti-container');
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                
+                container.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Share functionality
+        document.getElementById('share-btn').addEventListener('click', async () => {
+            try {
+                await navigator.share({
+                    title: 'День Рождения!',
+                    text: 'Оставь пожелание на моей праздничной страничке!',
+                    url: window.location.href
+                });
+            } catch (err) {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                alert(`Скопируйте эту ссылку и отправьте друзьям:\n\n${url}`);
+            }
+        });
+
+        // Initial messages animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.message-card');
+            messages.forEach((msg, index) => {
+                setTimeout(() => {
+                    msg.classList.add('animate__fadeInUp');
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
